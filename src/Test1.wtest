@@ -1,0 +1,53 @@
+/*
+Una empresa que contrate a estos cuatro profesionales, y cuyos honorarios de referencia son 3500 pesos, debe tener
+- como _profesionales caros_, solamente a Rocío.
+- como _universidades formadoras_, a las de Rosario, Corrientes y Hurlingham.
+- como _profesional más barato_ a Juana.
+- las provincias de Santa Fe y Córdoba están cubiertas, pero Misiones no.
+- dos de sus profesionales estudiaron en Rosario, uno en Hurlingham, ninguno (o sea cero) en San Martín.  
+
+Hacer los tests que sean necesarios para verificar esto. Se puede usar `fixture` para definir información que se usa en varios tests dentro de un _describe file_.*/
+import profesionales.*
+import EmpresadeServicios.*
+test "Test1" {
+	
+	var sanMartin = new Universidad()
+	var rosario = new Universidad()
+	var corrientes = new Universidad()
+	var hurlingham = new Universidad()
+	var juana = new ProfesionalVinculado()
+	var melina = new ProfesionalAsociado()
+	var rocio = new ProfesionalLibre()
+	var luciana = new ProfesionalLibre()
+	
+	sanMartin.setProvincia("Buenos Aires")
+	sanMartin.queHonorarioRecomienda(3000)
+	rosario.setProvincia("Santa Fe")
+	rosario.queHonorarioRecomienda(2800)
+	corrientes.setProvincia("corrientes")
+	corrientes.queHonorarioRecomienda(4200)
+	hurlingham.setProvincia("Buenos Aires")
+	hurlingham.queHonorarioRecomienda(8800)
+	juana.setUniversidad("rosario")
+	melina.setUniversidad("corrientes")
+	rocio.setUniversidad("hurlingham")
+	rocio.setHonorariosPorHora(5000)
+	rocio.dondePuedeTrabajar("santa fe")
+	rocio.dondePuedeTrabajar("cordoba")
+	rocio.dondePuedeTrabajar("buenos aires")
+	luciana.setUniversidad("rosario")
+	luciana.setHonorariosPorHora(3200)
+	luciana.dondePuedeTrabajar("santa fe")
+	luciana.dondePuedeTrabajar("entre rios")
+	
+	var empresa = new EmpresaDeServicios ()
+	empresa.setHonorarioDeReferencia(3500)
+	empresa.agregarProfesional(juana) 
+	empresa.agregarProfesional(melina)
+	empresa.agregarProfesional(rocio)
+	empresa.agregarProfesional(luciana)   
+	
+	assert.equals([{rocio}], empresa.profesionalesCaros())
+	
+	
+}
